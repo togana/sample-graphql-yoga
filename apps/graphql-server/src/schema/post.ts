@@ -33,5 +33,6 @@ builder.queryFields((t) => ({
     type: "Post",
     cursor: "id",
     resolve: async (query) => await prisma.post.findMany({ ...query }),
+    totalCount: async (query) =>  await prisma.post.count({ ...query }),
   }),
 }));
