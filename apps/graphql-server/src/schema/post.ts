@@ -4,6 +4,7 @@ import { prisma } from "../db";
 
 builder.prismaNode("Post", {
   id: { field: "id" },
+  nullable: true,
   findUnique: (id) => ({ id: Number.parseInt(id, 10) }),
   fields: (t) => ({
     title: t.exposeString("title"),
