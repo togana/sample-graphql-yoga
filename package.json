@@ -1,0 +1,16 @@
+{
+  "name": "sample-graphql-yoga",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "graphql-server": "pnpm --filter 'graphql-server'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@8.11.0",
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=8.11.0"
+  }
+}
