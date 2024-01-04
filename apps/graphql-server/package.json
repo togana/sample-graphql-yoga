@@ -6,14 +6,20 @@
   "scripts": {
     "build": "tsc -p .",
     "dev": "cross-env NODE_ENV=development ts-node-dev --exit-child --respawn src/index.ts",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "generate:prisma": "prisma generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pothos/core": "^3.41.0",
+    "@pothos/plugin-prisma": "^3.63.1",
+    "@pothos/plugin-relay": "^3.45.1",
+    "@prisma/client": "5.7.1",
     "fastify": "^4.25.2",
     "graphql": "^16.8.1",
+    "graphql-scalars": "^1.22.4",
     "graphql-yoga": "^5.1.1",
     "pino-pretty": "^10.3.1"
   },
@@ -21,7 +27,12 @@
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.10.6",
     "cross-env": "^7.0.3",
+    "prisma": "^5.7.1",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
+  },
+  "prisma": {
+    "seed": "ts-node --transpile-only prisma/seed.ts"
   }
 }
