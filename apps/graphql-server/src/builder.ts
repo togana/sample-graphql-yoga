@@ -17,21 +17,6 @@ export const builder = new SchemaBuilder<{
   plugins: [RelayPlugin, PrismaPlugin],
   relayOptions: {
     cursorType: 'ID',
-    // TODO: 下記のようにしたら node() での取得解決できるかと思ったがなんだかerrorになる
-    // nodeQueryOptions: {
-    //   resolve: async (root, { id }, context, info, resolveNode) => {
-    //     if (id.typename === 'User') {
-    //       return await prisma.user.findUnique({
-    //         where: {
-    //           id: Number.parseInt(id.id, 10),
-    //         },
-    //       });
-    //     }
-        
-    //     // fallback to normal loading for everything else
-    //     return resolveNode(id);
-    //   },
-    // },
   },
   prisma: {
     client: prisma,

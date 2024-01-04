@@ -4,10 +4,7 @@ import { prisma } from "../db";
 
 builder.prismaNode("Post", {
   id: { field: "id" },
-  findUnique: (id) => {
-    const { id: rawID } = decodeGlobalID(id);
-    return { id: Number.parseInt(rawID, 10) };
-  },
+  findUnique: (id) => ({ id: Number.parseInt(id, 10) }),
   fields: (t) => ({
     title: t.exposeString("title"),
     author: t.relation("author"),
