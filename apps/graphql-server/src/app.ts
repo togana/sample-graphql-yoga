@@ -1,5 +1,6 @@
 import fastify, { FastifyReply, FastifyRequest } from "fastify";
-import { createSchema, createYoga } from "graphql-yoga";
+import { createYoga } from "graphql-yoga";
+import { schema } from "./schema"
 
 export const buildApp = (logging = true) => {
   const app = fastify({
@@ -15,46 +16,7 @@ export const buildApp = (logging = true) => {
     req: FastifyRequest;
     reply: FastifyReply;
   }>({
-    // TODO: スキーマは別の所で定義できるようにする
-    schema: createSchema({
-      typeDefs: `
-        scalar File
-
-        type Query {
-          hello: String
-          isFastify: Boolean
-        }
-        type Mutation {
-          hello: String
-          getFileName(file: File!): String
-        }
-        type Subscription {
-          countdown(from: Int!, interval: Int): Int!
-        }
-      `,
-      resolvers: {
-        Query: {
-          hello: () => "world",
-          isFastify: (_, __, context) => !!context.req && !!context.reply,
-        },
-        Mutation: {
-          hello: () => "world",
-          getFileName: (root, { file }: { file: File }) => file.name,
-        },
-        Subscription: {
-          countdown: {
-            async *subscribe(_, { from, interval }) {
-              for (let i = from; i >= 0; i--) {
-                await new Promise((resolve) =>
-                  setTimeout(resolve, interval ?? 1000)
-                );
-                yield { countdown: i };
-              }
-            },
-          },
-        },
-      },
-    }),
+    schema,
     logging: {
       debug: (...args) => args.forEach((arg) => app.log.debug(arg)),
       info: (...args) => args.forEach((arg) => app.log.info(arg)),
