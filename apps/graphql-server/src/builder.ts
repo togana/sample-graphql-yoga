@@ -24,6 +24,13 @@ export const builder = new SchemaBuilder<{
     dmmf: Prisma.dmmf,
     filterConnectionTotalCount: true,
   },
+  withInput: {
+    argOptions: {
+      // 明示的に required: true を指定して基本的に prismaFieldWithInput を利用した場合必須にする
+      // ただし、prismaFieldWithInput で 不要な場合は argOptions の required: false を指定することで必須じゃなくできる
+      required: true,
+    },
+  },
 });
 
 builder.queryType();
