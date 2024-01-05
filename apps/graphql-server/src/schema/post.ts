@@ -1,6 +1,7 @@
 import { decodeGlobalID } from "@pothos/plugin-relay";
 import { builder } from "../builder";
 import { prisma } from "../db";
+import { likeEscapeString } from "./utils";
 
 builder.prismaNode("Post", {
   id: { field: "id" },
@@ -9,6 +10,15 @@ builder.prismaNode("Post", {
   fields: (t) => ({
     title: t.exposeString("title"),
     author: t.relation("author"),
+  }),
+});
+
+const QueryPostsInput = builder.inputType("QueryPostsInput", {
+  fields: (t) => ({
+    title: t.string({
+      description: "Filter by title",
+      required: false,
+    }),
   }),
 });
 
@@ -30,7 +40,27 @@ builder.queryFields((t) => ({
   posts: t.prismaConnection({
     type: "Post",
     cursor: "id",
-    resolve: async (query) => await prisma.post.findMany({ ...query }),
+    args: {
+      input: t.arg({ type: QueryPostsInput }),
+    },
+    resolve: async (query, parent, args) => {
+      const titleContains = args.input?.title
+        ? {
+            title: {
+              contains: likeEscapeString(args.input.title),
+            }
+          }
+        : {};
+
+      const where = {
+        ...titleContains,
+      };
+
+      return await prisma.post.findMany({
+        ...query,
+        where,
+      });
+    },
     totalCount: async (query) =>  await prisma.post.count({ ...query }),
   }),
 }));
