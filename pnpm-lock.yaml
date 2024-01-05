@@ -19,6 +19,9 @@ importers:
       '@pothos/plugin-relay':
         specifier: ^3.45.1
         version: 3.45.1(@pothos/core@3.41.0)(graphql@16.8.1)
+      '@pothos/plugin-with-input':
+        specifier: ^3.10.1
+        version: 3.10.1(@pothos/core@3.41.0)(graphql@16.8.1)
       '@prisma/client':
         specifier: 5.7.1
         version: 5.7.1(prisma@5.7.1)
@@ -236,6 +239,16 @@ packages:
 
   /@pothos/plugin-relay@3.45.1(@pothos/core@3.41.0)(graphql@16.8.1):
     resolution: {integrity: sha512-rumqbqd69wAP49XffhcI+ZdXLzu18IVrN4CWSX9mFqHQEwivnltUl9aCfdSTd63oVqPi8p5pTi63Dm+YkWpK4w==}
+    peerDependencies:
+      '@pothos/core': '*'
+      graphql: '>=15.1.0'
+    dependencies:
+      '@pothos/core': 3.41.0(graphql@16.8.1)
+      graphql: 16.8.1
+    dev: false
+
+  /@pothos/plugin-with-input@3.10.1(@pothos/core@3.41.0)(graphql@16.8.1):
+    resolution: {integrity: sha512-1Vz1EWMgNO/F37LHxkMr6V5w7lqiDiIvkonSZvOAbLUzOpwbrAgf36j2NrXFWahTN8Q6lPt4x9pNHnBeH18pAg==}
     peerDependencies:
       '@pothos/core': '*'
       graphql: '>=15.1.0'
