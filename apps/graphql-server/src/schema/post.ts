@@ -54,3 +54,32 @@ builder.queryFields((t) => ({
     totalCount: async (query) =>  await prisma.post.count({ ...query }),
   }),
 }));
+
+builder.mutationFields((t) => ({
+  createPost: t.prismaFieldWithInput({
+    type: "Post",
+    input: {
+      title: t.input.string({ required: true }),
+      authorId: t.input.id({ required: true }),
+    },
+    resolve: async (query, _, args) => {
+      const { id, typename } = decodeGlobalID(args.input.authorId.toString());
+      // TODO: ここで typename が User であることを確認するが error の処理をうまくやりたい
+      // バリデーションでどうにかできないか？
+      if (typename !== 'User') {
+        throw new Error(`Invalid authorId typename ${typename}`);
+      }
+      return await prisma.post.create({
+        ...query,
+        data: {
+          title: args.input.title,
+          author: {
+            connect: {
+              id: parseInt(id, 10),
+            },
+          },
+        },
+      });
+    },
+  }),
+}));
