@@ -43,24 +43,14 @@ builder.queryFields((t) => ({
     args: {
       input: t.arg({ type: QueryPostsInput }),
     },
-    resolve: async (query, parent, args) => {
-      const titleContains = args.input?.title
-        ? {
-            title: {
-              contains: likeEscapeString(args.input.title),
-            }
-          }
-        : {};
-
-      const where = {
-        ...titleContains,
-      };
-
-      return await prisma.post.findMany({
-        ...query,
-        where,
-      });
-    },
+    resolve: async (query, parent, args) => await prisma.post.findMany({
+      ...query,
+      where: {
+        title: {
+          contains: likeEscapeString(args.input?.title ?? ''),
+        },
+      },
+    }),
     totalCount: async (query) =>  await prisma.post.count({ ...query }),
   }),
 }));
