@@ -63,7 +63,7 @@ builder.mutationFields((t) => ({
       authorId: t.input.id({ required: true }),
     },
     resolve: async (query, _, args) => {
-      const { id, typename } = decodeGlobalID(args.input.authorId.toString());
+      const { id: authorId, typename } = decodeGlobalID(args.input.authorId.toString());
       // TODO: ここで typename が User であることを確認するが error の処理をうまくやりたい
       // バリデーションでどうにかできないか？
       if (typename !== 'User') {
@@ -75,7 +75,7 @@ builder.mutationFields((t) => ({
           title: args.input.title,
           author: {
             connect: {
-              id: parseInt(id, 10),
+              id: parseInt(authorId, 10),
             },
           },
         },
