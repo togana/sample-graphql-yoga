@@ -43,7 +43,7 @@ builder.queryFields((t) => ({
     args: {
       input: t.arg({ type: QueryPostsInput }),
     },
-    resolve: async (query, parent, args) => await prisma.post.findMany({
+    resolve: async (query, _, args) => await prisma.post.findMany({
       ...query,
       where: {
         title: {
