@@ -2,6 +2,7 @@ import { decodeGlobalID } from "@pothos/plugin-relay";
 import { builder } from "../builder";
 import { prisma } from "../db";
 import { likeEscapeString } from "./utils";
+import { searchPostSchema, createPostSchema } from "@libs/validator";
 
 builder.prismaNode("Post", {
   id: { field: "id" },
@@ -20,6 +21,9 @@ const QueryPostsInput = builder.inputType("QueryPostsInput", {
       required: false,
     }),
   }),
+  validate: {
+    schema: searchPostSchema,
+  },
 });
 
 builder.queryFields((t) => ({
@@ -62,13 +66,11 @@ builder.mutationFields((t) => ({
       title: t.input.string({ required: true }),
       authorId: t.input.id({ required: true }),
     },
+    validate: {
+      schema: createPostSchema,
+    },
     resolve: async (query, _, args) => {
       const { id: authorId, typename } = decodeGlobalID(args.input.authorId.toString());
-      // TODO: ここで typename が User であることを確認するが error の処理をうまくやりたい
-      // バリデーションでどうにかできないか？
-      if (typename !== 'User') {
-        throw new Error(`Invalid authorId typename ${typename}`);
-      }
       return await prisma.post.create({
         ...query,
         data: {

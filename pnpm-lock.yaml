@@ -10,6 +10,9 @@ importers:
 
   apps/graphql-server:
     dependencies:
+      '@libs/validator':
+        specifier: workspace:^
+        version: link:../../libs/validator
       '@pothos/core':
         specifier: ^3.41.0
         version: 3.41.0(graphql@16.8.1)
@@ -19,6 +22,9 @@ importers:
       '@pothos/plugin-relay':
         specifier: ^3.45.1
         version: 3.45.1(@pothos/core@3.41.0)(graphql@16.8.1)
+      '@pothos/plugin-validation':
+        specifier: ^3.10.1
+        version: 3.10.1(@pothos/core@3.41.0)(graphql@16.8.1)(zod@3.22.4)
       '@pothos/plugin-with-input':
         specifier: ^3.10.1
         version: 3.10.1(@pothos/core@3.41.0)(graphql@16.8.1)
@@ -40,6 +46,9 @@ importers:
       pino-pretty:
         specifier: ^10.3.1
         version: 10.3.1
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@tsconfig/node20':
         specifier: ^20.1.2
