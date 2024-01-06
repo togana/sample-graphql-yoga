@@ -1,0 +1,25 @@
+{
+  "name": "@libs/validator",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./dist/index.umd.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@pothos/plugin-relay": "^3.45.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "^20.10.6",
+    "@vitest/coverage-v8": "^1.1.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-dts": "^3.7.0",
+    "vitest": "^1.1.2"
+  }
+}

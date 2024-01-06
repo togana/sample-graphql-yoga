@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "graphql-server": "pnpm --filter 'graphql-server'"
+    "graphql-server": "pnpm --filter 'graphql-server'",
+    "validator": "pnpm --filter 'validator'"
   },
   "keywords": [],
   "author": "",

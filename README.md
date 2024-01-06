@@ -8,6 +8,12 @@ package install
 $ pnpm install
 ```
 
+workspace の package ビルド
+
+```
+$ pnpm validator build
+```
+
 prisma client をいい感じに生成する
 
 ```
