@@ -1,0 +1,70 @@
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Mutation {
+  createPost(input: MutationCreatePostInput!): Post!
+}
+
+input MutationCreatePostInput {
+  authorId: ID!
+  title: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  endCursor: ID
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: ID
+}
+
+type Post implements Node {
+  author: User!
+  id: ID!
+  title: String!
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
+  post(id: ID!): Post
+  posts(after: ID, before: ID, first: Int, input: QueryPostsInput, last: Int): QueryPostsConnection!
+}
+
+type QueryPostsConnection {
+  edges: [QueryPostsConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type QueryPostsConnectionEdge {
+  cursor: ID!
+  node: Post!
+}
+
+input QueryPostsInput {
+  """Filter by title"""
+  title: String
+}
+
+type User implements Node {
+  id: ID!
+  name: String
+  posts(after: ID, before: ID, first: Int, last: Int): UserPostsConnection!
+}
+
+type UserPostsConnection {
+  edges: [UserPostsConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserPostsConnectionEdge {
+  cursor: ID!
+  node: Post!
+}

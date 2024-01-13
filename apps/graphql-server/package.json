@@ -7,7 +7,9 @@
     "build": "tsc -p .",
     "dev": "cross-env NODE_ENV=development ts-node-dev --exit-child --respawn src/index.ts",
     "start": "node dist/index.js",
+    "generate": "pnpm run /^generate:.*/",
     "generate:prisma": "prisma generate",
+    "generate:schema": "ts-node --transpile-only scripts/generate-schema.ts",
     "migrate:prisma": "prisma migrate dev"
   },
   "keywords": [],
