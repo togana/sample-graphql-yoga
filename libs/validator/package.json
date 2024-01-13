@@ -2,10 +2,10 @@
   "name": "@libs/validator",
   "private": true,
   "version": "1.0.0",
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "vite build",
+    "build": "tsc -p .",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
@@ -19,7 +19,6 @@
     "@vitest/coverage-v8": "^1.1.2",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vite-plugin-dts": "^3.7.0",
     "vitest": "^1.1.2"
   }
 }
