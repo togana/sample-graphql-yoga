@@ -16,6 +16,9 @@ importers:
       '@pothos/core':
         specifier: ^3.41.0
         version: 3.41.0(graphql@16.8.1)
+      '@pothos/plugin-errors':
+        specifier: ^3.11.1
+        version: 3.11.1(@pothos/core@3.41.0)(graphql@16.8.1)
       '@pothos/plugin-prisma':
         specifier: ^3.63.1
         version: 3.63.1(@pothos/core@3.41.0)(@prisma/client@5.7.1)(graphql@16.8.1)(typescript@5.3.3)
@@ -534,6 +537,16 @@ packages:
     peerDependencies:
       graphql: '>=15.1.0'
     dependencies:
+      graphql: 16.8.1
+    dev: false
+
+  /@pothos/plugin-errors@3.11.1(@pothos/core@3.41.0)(graphql@16.8.1):
+    resolution: {integrity: sha512-ty+L1yfGartuuIMszGZyDQtzwpt/7ijVbnmGfOZdcQZOlk1P0MUr1iJ56Z5QhaHwZuwyVBF17gwP7ZroGs9htg==}
+    peerDependencies:
+      '@pothos/core': '*'
+      graphql: '>=15.1.0'
+    dependencies:
+      '@pothos/core': 3.41.0(graphql@16.8.1)
       graphql: 16.8.1
     dev: false
 

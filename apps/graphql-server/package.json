@@ -18,6 +18,7 @@
   "dependencies": {
     "@libs/validator": "workspace:^",
     "@pothos/core": "^3.41.0",
+    "@pothos/plugin-errors": "^3.11.1",
     "@pothos/plugin-prisma": "^3.63.1",
     "@pothos/plugin-relay": "^3.45.1",
     "@pothos/plugin-validation": "^3.10.1",

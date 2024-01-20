@@ -3,6 +3,7 @@ import { builder } from "../builder";
 import { prisma } from "../db";
 import { likeEscapeString } from "./utils";
 import { searchPostSchema, createPostSchema } from "@libs/validator";
+import { ZodError } from "zod";
 
 builder.prismaNode("Post", {
   id: { field: "id" },
@@ -44,6 +45,9 @@ builder.queryFields((t) => ({
   posts: t.prismaConnection({
     type: "Post",
     cursor: "id",
+    errors: {
+      types: [ZodError],
+    },
     args: {
       input: t.arg({ type: QueryPostsInput }),
     },
@@ -62,6 +66,9 @@ builder.queryFields((t) => ({
 builder.mutationFields((t) => ({
   createPost: t.prismaFieldWithInput({
     type: "Post",
+    errors: {
+      types: [ZodError],
+    },
     input: {
       title: t.input.string({ required: true }),
       authorId: t.input.id({ required: true }),
