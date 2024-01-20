@@ -20,6 +20,12 @@ prisma client をいい感じに生成する
 $ pnpm graphql-server generate:prisma
 ```
 
+schema をいい感じに生成する
+
+```
+$ pnpm graphql-server generate:schema
+```
+
 マイグレーション実行するとDBも生成される(ついでに30000ユーザ生成される)
 
 ```
@@ -38,29 +44,70 @@ $ pnpm graphql-server dev
 
 https://altairgraphql.dev/
 
+### post の作成
+
+```
+mutation createPost($input: MutationCreatePostInput!) {
+  createPost(input: $input) {
+    ... on MutationCreatePostSuccess {
+      data {
+        author {
+          id
+          name
+          posts(first: 1) {
+            totalCount
+          }
+        }
+        id
+        title
+      }
+    }
+    ... on ZodError {
+      message
+      fieldErrors {
+        message
+        path
+      }
+    }
+  }
+}
+```
+
+
 ### 複数 post 取得
 
 1000件取得
 
 ```
-{
-  posts(first: 1000) {
-    totalCount
-    edges {
-      cursor
-      node {
-        id
-        title
-        author {
-          name
+query getPosts($input: QueryPostsInput) {
+  posts(first: 1000, input: $input) {
+    ... on QueryPostsSuccess {
+      data {
+        totalCount
+        edges {
+          cursor
+          node {
+            id
+            title
+            author {
+              name
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
         }
       }
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
+    ... on ZodError {
+      message
+      fieldErrors {
+        message
+        path
+      }
     }
   }
 }
@@ -69,24 +116,35 @@ https://altairgraphql.dev/
 cursor ページネーションの挙動
 
 ```
-{
-  posts(first: 1000, after: "R1BDOk46MTAw") {
-    totalCount
-    edges {
-      cursor
-      node {
-        id
-        title
-        author {
-          name
+query getPosts($input: QueryPostsInput) {
+  posts(first: 1000, after: "R1BDOk46MTAw", input: $input) {
+    ... on QueryPostsSuccess {
+      data {
+        totalCount
+        edges {
+          cursor
+          node {
+            id
+            title
+            author {
+              name
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
         }
       }
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
+    ... on ZodError {
+      message
+      fieldErrors {
+        message
+        path
+      }
     }
   }
 }
