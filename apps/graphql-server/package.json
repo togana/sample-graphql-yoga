@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@graphql-yoga/plugin-sofa": "^3.1.1",
     "@libs/validator": "workspace:^",
     "@pothos/core": "^3.41.0",
     "@pothos/plugin-errors": "^3.11.1",
