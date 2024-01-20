@@ -22,9 +22,13 @@ const QueryPostsInput = builder.inputType("QueryPostsInput", {
       required: false,
     }),
   }),
-  validate: {
-    schema: searchPostSchema,
-  },
+});
+
+const MutationCreatePostInput = builder.inputType("MutationCreatePostInput", {
+  fields: (t) => ({
+    title: t.string({ required: true }),
+    authorId: t.id({ required: true }),
+  }),
 });
 
 builder.queryFields((t) => ({
@@ -49,7 +53,10 @@ builder.queryFields((t) => ({
       types: [ZodError],
     },
     args: {
-      input: t.arg({ type: QueryPostsInput }),
+      input: t.arg({ type: QueryPostsInput, required: false }),
+    },
+    validate: {
+      schema: searchPostSchema,
     },
     resolve: async (query, _, args) => await prisma.post.findMany({
       ...query,
@@ -64,14 +71,13 @@ builder.queryFields((t) => ({
 }));
 
 builder.mutationFields((t) => ({
-  createPost: t.prismaFieldWithInput({
+  createPost: t.prismaField({
     type: "Post",
     errors: {
       types: [ZodError],
     },
-    input: {
-      title: t.input.string({ required: true }),
-      authorId: t.input.id({ required: true }),
+    args: {
+      input: t.arg({ type: MutationCreatePostInput, required: true }),
     },
     validate: {
       schema: createPostSchema,

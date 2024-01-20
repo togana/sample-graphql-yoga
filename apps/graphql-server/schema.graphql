@@ -3,13 +3,23 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+interface Error {
+  message: String!
+}
+
 type Mutation {
-  createPost(input: MutationCreatePostInput!): Post!
+  createPost(input: MutationCreatePostInput!): MutationCreatePostResult!
 }
 
 input MutationCreatePostInput {
   authorId: ID!
   title: String!
+}
+
+union MutationCreatePostResult = MutationCreatePostSuccess | ZodError
+
+type MutationCreatePostSuccess {
+  data: Post!
 }
 
 interface Node {
@@ -33,7 +43,7 @@ type Query {
   node(id: ID!): Node
   nodes(ids: [ID!]!): [Node]!
   post(id: ID!): Post
-  posts(after: ID, before: ID, first: Int, input: QueryPostsInput, last: Int): QueryPostsConnection!
+  posts(after: ID, before: ID, first: Int, input: QueryPostsInput, last: Int): QueryPostsResult!
 }
 
 type QueryPostsConnection {
@@ -52,6 +62,12 @@ input QueryPostsInput {
   title: String
 }
 
+union QueryPostsResult = QueryPostsSuccess | ZodError
+
+type QueryPostsSuccess {
+  data: QueryPostsConnection!
+}
+
 type User implements Node {
   id: ID!
   name: String
@@ -67,4 +83,14 @@ type UserPostsConnection {
 type UserPostsConnectionEdge {
   cursor: ID!
   node: Post!
+}
+
+type ZodError implements Error {
+  fieldErrors: [ZodFieldError!]!
+  message: String!
+}
+
+type ZodFieldError {
+  message: String!
+  path: [String!]!
 }
