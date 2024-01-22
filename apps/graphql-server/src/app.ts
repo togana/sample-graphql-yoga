@@ -17,6 +17,8 @@ export const buildApp = (logging = true) => {
     reply: FastifyReply;
   }>({
     schema,
+    landingPage: process.env.NODE_ENV === "development",
+    graphiql: process.env.NODE_ENV === "development",
     logging: {
       debug: (...args) => args.forEach((arg) => app.log.debug(arg)),
       info: (...args) => args.forEach((arg) => app.log.info(arg)),
